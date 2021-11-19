@@ -63,7 +63,18 @@ export const store = new Vuex.Store({
       fetchCards (context) {
           Vue.axios.get('https://random-data-api.com/api/food/random_food?size=30')
               .then(response => {
-                  context.commit('setCards', response.data)
+                  const path = require.context(
+                    './../assets/images', 
+                    false, 
+                    /\.webp$/
+                  )
+                  const imageList = path.keys().map(path)
+                  let data = response.data.map(item => {
+                    const image = imageList[Math.floor(Math.random()*imageList.length)]
+                    item.image = image
+                    return item
+                  }) 
+                  context.commit('setCards', data)
               })
               .catch((error) => {
                   console.log('error', error.statusText)

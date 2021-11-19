@@ -6,12 +6,14 @@
           В каталог
         </div>
       </router-link>
-
       <div class="products-list" 
         v-for="item in cartItems"
-        :key="item.id"
+        :key="item.id * Math.random() * 101"
         >
         <div class="item">
+           <div class="item__image">
+             <img :src="item.image" :alt="item.title">
+           </div>
           <div class="item__name">
             Название: {{ item.title }}
           </div>
@@ -37,33 +39,24 @@
 export default {
   name: 'Cart',
   computed: {
-    getCartItems () {
+    cartItems () {
       return this.$store.getters.getCartItems
     },
-    getTotalPrice () {
+    totalPrice () {
       return this.$store.getters.getTotalPrice
-    }
-  },
-  watch: {
-    getCartItems: function () {
-      this.cartItems = this.getCartItems
     },
-    getTotalPrice: function () {
-      this.totalPrice = this.getTotalPrice
-    }
-  },
-  data () {
-    return {
-      cartItems: [],
-      totalPrice: 0
+    itemsList () {
+      return this.cartItems.map(item => {
+        return item.title
+      }).join(', ') 
     }
   },
   methods: {
     checkout () {
-      console.log('dsfd')
+      console.log(this.itemsList)
       this.$fire({
         title: "Успешно",
-        text: `Заказ на сумму ${this.totalPrice} руб. размещен`,
+        text: `Заказ из ${this.itemsList} на сумму ${this.totalPrice} руб. размещен`,
         type: "success",
         timer: 3000
       })
@@ -95,10 +88,29 @@ export default {
       align-items: center;
       margin-bottom: 10px;
       padding: 30px;
+      border-radius: 15px;
+      padding-left: 20px;
       border: 1px solid grey;
       &__name, &__price, &__quantity {
         flex: 0 1 33.333%;
         margin-right: 10px;
+      }
+      &__image {
+        justify-self: start;
+        position: relative;
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        border-radius: 10px;
+        margin-right: 10px;
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: contain
+        }
       }
     }
   }

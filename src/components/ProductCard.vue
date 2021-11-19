@@ -1,5 +1,8 @@
 <template>
   <div class="product-card">
+    <div class="product-card__image">
+      <img :src="cardImage" :alt="cardTitle">
+    </div>
     <div class="product-card__name">
       {{ cardTitle }}
     </div>
@@ -29,7 +32,8 @@ export default {
       title: this.cardTitle,
       description: this.cardDesc,
       id: this.cardId,
-      price: this.cardPrice
+      price: this.cardPrice,
+      image: this.cardImage
     }
   },
   methods: {
@@ -39,7 +43,8 @@ export default {
         {
           title: this.title,
           id: this.id,
-          price: this.price
+          price: this.price,
+          image: this.image
         }
       )
     },
@@ -71,6 +76,21 @@ export default {
     -moz-box-shadow: 0px 11px 33px 3px rgba(34, 60, 80, 0.2);
     box-shadow: 0px 11px 33px 3px rgba(34, 60, 80, 0.2);
     transform: translateY(1%)
+  }
+  &__image {
+    position: relative;
+    width: 100%;
+    padding-bottom: 92%;
+    overflow: hidden;
+    border-radius: 15px;
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   &__name {
     font-size: 18px;

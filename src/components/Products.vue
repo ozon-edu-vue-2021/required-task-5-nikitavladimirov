@@ -4,7 +4,7 @@
       <keep-alive>
         <router-link :to="{name: 'cart'}">
           <div class="cart">
-            Корзина: {{ cartItemCount }} шт.
+            Корзина: {{ cartItemsCount }} шт.
           </div> 
         </router-link>
       </keep-alive>
@@ -35,32 +35,11 @@ export default {
     ProductCard
   },
   computed: {
-    getCards () {
+    cards () {
       return this.$store.getters.getCards
     },
-    getCartItemCount () {
+    cartItemsCount () {
       return this.$store.getters.getCartItemCount
-    },
-    getCartItems () {
-      return this.$store.getters.getCartItems
-    },
-  },
-  watch: {
-    getCards: function () {
-      this.cards = this.getCards
-    },
-    getCartItemCount: function () {
-      this.cartItemCount = this.getCartItemCount
-    },
-    getCartItems: function () {
-      this.cartItems = this.getCartItems
-    },
-  },
-  data () {
-    return {
-      cards: [],
-      cartItemCount: 0,
-      cartItems: [],
     }
   },
   methods: {
